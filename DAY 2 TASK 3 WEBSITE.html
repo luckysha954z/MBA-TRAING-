@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SuryaMeadow Dairy — Farm-Fresh Morning Milk &amp; Dairy | Nagpur</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            meadow: '#14532d',
+            meadowLight: '#166534',
+            meadowSoft: '#ecfdf5',
+            cream: '#faf8f2',
+            butter: '#eab308',
+            butterSoft: '#fef9c3',
+            ink: '#0f172a'
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-cream text-ink antialiased selection:bg-butter/40">
+
+  <!-- Toast Notification -->
+  <div
+    id="toast"
+    role="status"
+    aria-live="polite"
+    class="pointer-events-none fixed bottom-5 right-5 z-50 hidden max-w-sm items-center gap-2.5 rounded-xl bg-meadow px-4 py-3 text-sm font-medium text-white shadow-xl transition-all"
+  >
+    <span class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-butter text-xs font-bold text-ink">✓</span>
+    <span id="toastText">Updated!</span>
+  </div>
+
+  <!-- Sticky Top Navbar -->
+  <header class="sticky top-0 z-40 border-b border-emerald-950/10 bg-cream/95 backdrop-blur-md">
+    <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
+      <a href="#" class="flex items-center gap-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-meadow rounded-lg">
+        <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-meadow text-white shadow-sm" aria-hidden="true">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3c2.5 3.5 5 6.8 5 10.5a5 5 0 0 1-10 0C7 9.8 9.5 6.5 12 3z" />
+            <path d="M9.5 14.5a2.5 2.5 0 0 0 5 0" />
+          </svg>
+        </span>
+        <div>
+          <span class="block text-base font-extrabold tracking-tight text-meadow">SuryaMeadow Dairy</span>
+          <span class="block text-[11px] font-medium text-slate-600">Nagpur, Maharashtra • 4°C Cold Chain</span>
+        </div>
+      </a>
+
+      <nav class="hidden items-center gap-6 text-sm font-semibold text-slate-700 lg:flex" aria-label="Primary">
+        <a href="#products" class="transition hover:text-meadow">Products</a>
+        <a href="#subscription" class="transition hover:text-meadow">Subscription</a>
+        <a href="#quality" class="transition hover:text-meadow">Quality</a>
+        <a href="#delivery" class="transition hover:text-meadow">Delivery</a>
+        <a href="#faq" class="transition hover:text-meadow">FAQ</a>
+      </nav>
+
+      <div class="flex items-center gap-2.5">
+        <button
+          id="navCheckDeliveryBtn"
+          type="button"
+          class="hidden rounded-xl border border-meadow/30 bg-white px-3.5 py-2 text-xs font-bold text-meadow transition hover:bg-meadowSoft sm:inline-flex sm:text-sm"
+        >
+          Check Delivery
+        </button>
+        <button
+          id="openBagBtn"
+          type="button"
+          class="inline-flex items-center gap-1.5 rounded-xl bg-meadow px-3.5 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-meadowLight sm:text-sm"
+          aria-controls="bagDrawer"
+          aria-expanded="false"
+        >
+          <span>Bag</span>
+          <span class="rounded-full bg-butter px-2 py-0.5 text-xs font-extrabold text-ink">(<span id="bagCount">0</span>)</span>
+        </button>
+        <button
+          id="mobileMenuBtn"
+          type="button"
+          class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-300 bg-white text-slate-700 lg:hidden"
+          aria-label="Toggle Menu"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
+        >
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden border-t border-slate-200 bg-cream px-4 py-3.5 lg:hidden">
+      <nav class="flex flex-col gap-2 text-sm font-semibold text-slate-700" aria-label="Mobile Navigation">
+        <a href="#products" class="mobile-nav-link rounded-lg px-2 py-1.5 hover:bg-white hover:text-meadow">Products</a>
+        <a href="#subscription" class="mobile-nav-link rounded-lg px-2 py-1.5 hover:bg-white hover:text-meadow">Subscription</a>
+        <a href="#quality" class="mobile-nav-link rounded-lg px-2 py-1.5 hover:bg-white hover:text-meadow">Quality</a>
+        <a href="#delivery" class="mobile-nav-link rounded-lg px-2 py-1.5 hover:bg-white hover:text-meadow">Delivery</a>
+        <a href="#faq" class="mobile-nav-link rounded-lg px-2 py-1.5 hover:bg-white hover:text-meadow">FAQ</a>
+        <button
+          id="mobileCheckDeliveryBtn"
+          type="button"
+          class="mt-1 rounded-xl border border-meadow/30 bg-white px-3.5 py-2 text-left text-sm font-bold text-meadow"
+        >
+          Check Delivery Availability
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero & Daily Morning Cost Estimator -->
+    <section class="relative overflow-hidden border-b border-emerald-950/10">
+      <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
+        <div class="grid items-center gap-10 lg:grid-cols-12">
+          <!-- Hero Copy -->
+          <div class="space-y-6 lg:col-span-7">
+            <span class="inline-flex items-center gap-2 rounded-full border border-emerald-900/15 bg-white px-3.5 py-1.5 text-xs font-bold text-meadow shadow-sm">
+              <span class="h-2 w-2 rounded-full bg-butter"></span>
+              Nagpur Morning Harvest • Delivered Before 7:00 AM
+            </span>
+
+            <h1 class="text-4xl font-extrabold tracking-tight text-ink sm:text-5xl lg:leading-[1.12]">
+              Farm-fresh morning milk &amp; traditional dairy, chilled and at your door before 7:00 AM.
+            </h1>
+
+            <p class="max-w-xl text-base leading-relaxed text-slate-700 sm:text-lg">
+              Raised on balanced green fodder in the Nagpur countryside, our herd’s milk is chilled to 4°C within minutes of milking and delivered fresh alongside dahi, malai paneer, and hand-churned bilona ghee.
+            </p>
+
+            <div class="flex flex-wrap gap-3 pt-1">
+              <a
+                href="#subscription"
+                class="rounded-xl bg-meadow px-6 py-3.5 text-sm font-bold text-white shadow-sm transition hover:bg-meadowLight"
+              >
+                Start Morning Subscription
+              </a>
+              <a
+                href="#products"
+                class="rounded-xl border border-slate-300 bg-white px-6 py-3.5 text-sm font-bold text-ink transition hover:bg-slate-50"
+              >
+                Explore Products
+              </a>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="grid grid-cols-1 gap-3 border-t border-slate-200/90 pt-6 sm:grid-cols-3">
+              <div class="flex items-center gap-3 rounded-xl bg-white/80 p-3 ring-1 ring-slate-200/70">
+                <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-meadowSoft text-meadow">
+                  <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z" />
+                  </svg>
+                </span>
+                <div>
+                  <p class="text-sm font-bold text-meadow">4°C Cold Chain</p>
+                  <p class="text-xs text-slate-600">Insulated route crates</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3 rounded-xl bg-white/80 p-3 ring-1 ring-slate-200/70">
+                <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-meadowSoft text-meadow">
+                  <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 3h6M10 3v6l-5 8.5A2 2 0 0 0 6.7 20h10.6a2 2 0 0 0 1.7-2.5L14 9V3" />
+                  </svg>
+                </span>
+                <div>
+                  <p class="text-sm font-bold text-meadow">Lab Tested</p>
+                  <p class="text-xs text-slate-600">Daily fat &amp; purity checks</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3 rounded-xl bg-white/80 p-3 ring-1 ring-slate-200/70">
+                <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-meadowSoft text-meadow">
+                  <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10z" />
+                  </svg>
+                </span>
+                <div>
+                  <p class="text-sm font-bold text-meadow">Ethical Herd Care</p>
+                  <p class="text-xs text-slate-600">Clean barns &amp; vet care</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Daily Morning Cost Estimator -->
+          <div id="subscription" class="scroll-mt-24 lg:col-span-5">
+            <div class="rounded-2xl border border-emerald-950/15 bg-white p-6 shadow-md">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-meadow">Custom Plan</span>
+                  <h2 class="mt-0.5 text-xl font-extrabold text-ink">Daily Morning Cost Estimator</h2>
+                </div>
+                <span class="rounded-lg bg-butterSoft px-2.5 py-1 text-xs font-bold text-ink">₹72 / Litre</span>
+              </div>
+              <p class="mt-1 text-xs text-slate-600">Adjust quantities &amp; cadence for an instant 30-day cycle estimate.</p>
+
+              <div class="mt-5 space-y-5">
+                <!-- Milk Slider -->
+                <div>
+                  <div class="flex items-center justify-between text-sm font-semibold">
+                    <label for="milkLiters" class="text-ink">Fresh Whole Milk / Delivery</label>
+                    <span id="milkLitersLabel" class="rounded-md bg-meadowSoft px-2 py-0.5 font-extrabold text-meadow">1.0 L</span>
+                  </div>
+                  <input
+                    id="milkLiters"
+                    type="range"
+                    min="0.5"
+                    max="5"
+                    step="0.5"
+                    value="1"
+                    class="mt-2.5 w-full cursor-pointer accent-meadow"
+                  />
+                  <div class="mt-1 flex justify-between text-[11px] font-medium text-slate-500">
+                    <span>0.5 L</span>
+                    <span>2.5 L</span>
+                    <span>5.0 L</span>
+                  </div>
+                </div>
+
+                <!-- Curd Packs Stepper -->
+                <div class="flex items-center justify-between rounded-xl border border-slate-200 bg-cream/70 p-3.5">
+                  <div>
+                    <p class="text-sm font-bold text-ink">Fresh Set Curd Packs (400 g)</p>
+                    <p class="text-xs text-slate-600">₹42 per pack / delivery</p>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button
+                      id="curdDecBtn"
+                      type="button"
+                      aria-label="Decrease curd packs"
+                      class="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-ink hover:bg-slate-100"
+                    >
+                      −
+                    </button>
+                    <span id="curdCountLabel" class="w-6 text-center text-sm font-extrabold text-ink">0</span>
+                    <button
+                      id="curdIncBtn"
+                      type="button"
+                      aria-label="Increase curd packs"
+                      class="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-ink hover:bg-slate-100"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Billing Frequency -->
+                <div>
+                  <span class="block text-sm font-semibold text-ink">Billing &amp; Delivery Frequency</span>
+                  <div class="mt-2 grid grid-cols-2 gap-2" role="radiogroup" aria-label="Delivery Frequency">
+                    <button
+                      type="button"
+                      data-days="30"
+                      class="freq-btn rounded-xl border-2 border-meadow bg-meadowSoft px-3 py-2.5 text-left transition"
+                      aria-pressed="true"
+                    >
+                      <span class="block text-sm font-bold text-meadow">Daily</span>
+                      <span class="block text-[11px] text-slate-600">30 deliveries / mo</span>
+                    </button>
+                    <button
+                      type="button"
+                      data-days="15"
+                      class="freq-btn rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-left transition hover:bg-slate-50"
+                      aria-pressed="false"
+                    >
+                      <span class="block text-sm font-bold text-ink">Alternate Days</span>
+                      <span class="block text-[11px] text-slate-600">15 deliveries / mo</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Live Summary -->
+                <div class="rounded-xl bg-cream p-4 ring-1 ring-slate-200/80">
+                  <div class="flex items-center justify-between text-xs text-slate-600">
+                    <span>Per Morning Delivery</span>
+                    <span id="perDeliveryTotal" class="font-bold text-ink">₹72</span>
+                  </div>
+                  <div class="mt-2 flex items-baseline justify-between border-t border-slate-200 pt-2.5">
+                    <span class="text-sm font-semibold text-slate-700">Estimated Cycle Total</span>
+                    <span id="estTotal" class="text-2xl font-extrabold text-meadow">₹2,160</span>
+                  </div>
+                </div>
+
+                <button
+                  id="addEstToBagBtn"
+                  type="button"
+                  class="w-full rounded-xl bg-butter py-3 text-sm font-extrabold text-ink shadow-sm transition hover:brightness-95"
+                >
+                  Add Subscription Plan to Bag
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filterable Product Catalog -->
+    <section id="products" class="scroll-mt-20 border-b border-slate-200/80 bg-white py-14">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-meadow">Morning Catalog</span>
+            <h2 class="mt-1 text-3xl font-extrabold text-ink">Farm-Fresh Dairy Essentials</h2>
+            <p class="mt-1.5 text-sm text-slate-600">Zero preservatives, small-batch processing, and transparent unit pricing.</p>
+          </div>
+
+          <div id="categoryFilters" class="flex flex-wrap gap-2" role="tablist" aria-label="Product Categories">
+            <button data-cat="All" type="button" class="cat-btn rounded-xl bg-meadow px-4 py-2 text-xs font-bold text-white shadow-sm">All</button>
+            <button data-cat="Milk" type="button" class="cat-btn rounded-xl bg-cream px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-200">Milk</button>
+            <button data-cat="Cultured &amp; Paneer" type="button" class="cat-btn rounded-xl bg-cream px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-200">Cultured &amp; Paneer</button>
+            <button data-cat="Ghee &amp; Sweets" type="button" class="cat-btn rounded-xl bg-cream px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-200">Ghee &amp; Sweets</button>
+          </div>
+        </div>
+
+        <div id="productGrid" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+      </div>
+    </section>
+
+    <!-- Farm & 4-Step Cold Chain Section -->
+    <section id="quality" class="scroll-mt-20 mx-auto max-w-6xl px-4 py-14 sm:px-6">
+      <div class="grid gap-8 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-7">
+          <span class="text-xs font-bold uppercase tracking-wider text-meadow">Quality &amp; Herd Care</span>
+          <h2 class="mt-1 text-3xl font-extrabold text-ink">Ethical Farming &amp; 4-Step Cold Chain</h2>
+          <p class="mt-2.5 text-sm leading-relaxed text-slate-700 sm:text-base">
+            Our Nagpur farm follows stress-free cattle care with shaded open paddocks, clean drinking water, mineral-balanced green fodder (maize, berseem, and dry roughage), and routine veterinary checkups—never synthetic hormones.
+          </p>
+        </div>
+        <div class="lg:col-span-5">
+          <div class="rounded-2xl border border-emerald-950/10 bg-white p-4 shadow-sm">
+            <div class="flex items-center gap-3">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-butterSoft text-ink">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </span>
+              <div>
+                <p class="text-sm font-bold text-ink">Every Morning Batch Logged</p>
+                <p class="text-xs text-slate-600">Fat %, SNF, temperature (≤ 4°C), and adulteration screening recorded prior to dispatch.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-center justify-between">
+            <span class="rounded-lg bg-meadowSoft px-2.5 py-1 text-xs font-extrabold text-meadow">STEP 01</span>
+            <svg class="h-5 w-5 text-meadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2" />
+            </svg>
+          </div>
+          <h3 class="mt-3 text-base font-bold text-ink">Morning Milking</h3>
+          <p class="mt-1.5 text-sm text-slate-600">Hygienic closed-line milking begins at 3:30 AM from well-rested, fodder-fed cows and buffaloes.</p>
+        </article>
+
+        <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-center justify-between">
+            <span class="rounded-lg bg-meadowSoft px-2.5 py-1 text-xs font-extrabold text-meadow">STEP 02</span>
+            <svg class="h-5 w-5 text-meadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z" />
+            </svg>
+          </div>
+          <h3 class="mt-3 text-base font-bold text-ink">Chilling to 4°C</h3>
+          <p class="mt-1.5 text-sm text-slate-600">Rapid bulk-chilling drops milk temperature to 4°C immediately, preserving natural sweetness without preservatives.</p>
+        </article>
+
+        <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-center justify-between">
+            <span class="rounded-lg bg-meadowSoft px-2.5 py-1 text-xs font-extrabold text-meadow">STEP 03</span>
+            <svg class="h-5 w-5 text-meadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 11l3 3L22 4" />
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+            </svg>
+          </div>
+          <h3 class="mt-3 text-base font-bold text-ink">Lab Quality Check</h3>
+          <p class="mt-1.5 text-sm text-slate-600">Each batch passes Fat, SNF, MBRT freshness, and zero-adulteration tests before glass or pouch sealing.</p>
+        </article>
+
+        <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-center justify-between">
+            <span class="rounded-lg bg-meadowSoft px-2.5 py-1 text-xs font-extrabold text-meadow">STEP 04</span>
+            <svg class="h-5 w-5 text-meadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+          </div>
+          <h3 class="mt-3 text-base font-bold text-ink">Insulated Doorstep Delivery</h3>
+          <p class="mt-1.5 text-sm text-slate-600">Chilled crates roll out across Nagpur neighborhoods for quiet doorstep delivery before 7:00 AM.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Delivery Zone Checker & FAQ Accordion -->
+    <section id="delivery" class="scroll-mt-20 border-y border-slate-200/80 bg-white py-14">
+      <div class="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-2">
+        <!-- Delivery Zone Checker -->
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-meadow">Nagpur Service Routes</span>
+          <h2 class="mt-1 text-2xl font-extrabold text-ink">Check Morning Delivery Availability</h2>
+          <p class="mt-2 text-sm text-slate-600">Enter your Nagpur PIN code or locality to verify pre-7:00 AM route coverage.</p>
+
+          <div class="mt-3 flex flex-wrap gap-1.5" aria-label="Sample Nagpur zones">
+            <button type="button" class="sample-zone rounded-lg bg-cream px-2.5 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-meadowSoft hover:text-meadow" data-zone="440015">440015</button>
+            <button type="button" class="sample-zone rounded-lg bg-cream px-2.5 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-meadowSoft hover:text-meadow" data-zone="440022">440022</button>
+            <button type="button" class="sample-zone rounded-lg bg-cream px-2.5 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-meadowSoft hover:text-meadow" data-zone="440034">440034</button>
+            <button type="button" class="sample-zone rounded-lg bg-cream px-2.5 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-meadowSoft hover:text-meadow" data-zone="Manish Nagar">Manish Nagar</button>
+            <button type="button" class="sample-zone rounded-lg bg-cream px-2.5 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-meadowSoft hover:text-meadow" data-zone="Somalwada">Somalwada</button>
+            <button type="button" class="sample-zone rounded-lg bg-cream px-2.5 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-meadowSoft hover:text-meadow" data-zone="Manewada">Manewada</button>
+          </div>
+
+          <form id="zoneForm" class="mt-4 flex gap-2" novalidate>
+            <label for="zoneInput" class="sr-only">Enter PIN code or locality</label>
+            <input
+              id="zoneInput"
+              type="text"
+              placeholder="e.g. 440022 or Manish Nagar"
+              class="flex-1 rounded-xl border border-slate-300 bg-cream/40 px-3.5 py-2.5 text-sm text-ink focus:border-meadow focus:bg-white focus:outline-none"
+            />
+            <button
+              type="submit"
+              class="rounded-xl bg-meadow px-5 py-2.5 text-sm font-bold text-white transition hover:bg-meadowLight"
+            >
+              Check
+            </button>
+          </form>
+
+          <div id="zoneResult" class="mt-3 hidden rounded-xl p-3.5 text-sm font-medium" aria-live="polite"></div>
+        </div>
+
+        <!-- FAQ Accordion -->
+        <div id="faq" class="scroll-mt-24">
+          <span class="text-xs font-bold uppercase tracking-wider text-meadow">Common Questions</span>
+          <h2 class="mt-1 text-2xl font-extrabold text-ink">Frequently Asked Questions</h2>
+          <div id="faqList" class="mt-4 space-y-2.5"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wholesale & Home Inquiry Form -->
+    <section id="inquiry" class="scroll-mt-20 mx-auto max-w-6xl px-4 py-14 sm:px-6">
+      <div class="rounded-2xl border border-emerald-950/15 bg-white p-6 shadow-sm sm:p-8">
+        <div class="max-w-2xl">
+          <span class="text-xs font-bold uppercase tracking-wider text-meadow">Farm Desk • Nagpur</span>
+          <h2 class="mt-1 text-2xl font-extrabold text-ink">Home Subscriptions, Cafes &amp; Wholesale Inquiry</h2>
+          <p class="mt-1.5 text-sm text-slate-600">
+            Need daily home delivery, bulk malai paneer for your kitchen, or bilona ghee packs for events? Share your details below.
+          </p>
+        </div>
+
+        <form id="inquiryForm" class="mt-6 grid gap-4 sm:grid-cols-2" novalidate>
+          <div>
+            <label for="inqName" class="block text-xs font-bold uppercase tracking-wide text-slate-700">Full Name *</label>
+            <input
+              id="inqName"
+              type="text"
+              placeholder="e.g. Aarav Deshmukh"
+              class="mt-1.5 w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:border-meadow focus:outline-none"
+            />
+            <p id="errName" class="mt-1 hidden text-xs font-medium text-red-600"></p>
+          </div>
+
+          <div>
+            <label for="inqContact" class="block text-xs font-bold uppercase tracking-wide text-slate-700">Mobile (10-digit) or Email *</label>
+            <input
+              id="inqContact"
+              type="text"
+              placeholder="e.g. 9823012345 or name@example.com"
+              class="mt-1.5 w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:border-meadow focus:outline-none"
+            />
+            <p id="errContact" class="mt-1 hidden text-xs font-medium text-red-600"></p>
+          </div>
+
+          <div>
+            <label for="inqType" class="block text-xs font-bold uppercase tracking-wide text-slate-700">Inquiry Type</label>
+            <select id="inqType" class="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm focus:border-meadow focus:outline-none">
+              <option value="Home Subscription">Home Morning Subscription</option>
+              <option value="Cafe / Restaurant Wholesale">Cafe / Restaurant Wholesale</option>
+              <option value="Bulk Ghee & Sweets">Bulk Ghee, Paneer &amp; Events</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="inqLocality" class="block text-xs font-bold uppercase tracking-wide text-slate-700">Nagpur Locality / PIN *</label>
+            <input
+              id="inqLocality"
+              type="text"
+              placeholder="e.g. Manish Nagar, 440015"
+              class="mt-1.5 w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:border-meadow focus:outline-none"
+            />
+            <p id="errLocality" class="mt-1 hidden text-xs font-medium text-red-600"></p>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="inqMessage" class="block text-xs font-bold uppercase tracking-wide text-slate-700">Requirement Details *</label>
+            <textarea
+              id="inqMessage"
+              rows="3"
+              placeholder="Tell us your daily milk requirement, curd/paneer volume, or preferred start date..."
+              class="mt-1.5 w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:border-meadow focus:outline-none"
+            ></textarea>
+            <p id="errMessage" class="mt-1 hidden text-xs font-medium text-red-600"></p>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-3 sm:col-span-2">
+            <button
+              type="submit"
+              class="rounded-xl bg-meadow px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-meadowLight"
+            >
+              Send Inquiry
+            </button>
+            <span class="text-xs text-slate-500">Typical response time: Same evening before route dispatch.</span>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-emerald-950/10 bg-meadow text-white">
+    <div class="mx-auto flex max-w-6xl flex-col justify-between gap-6 px-4 py-10 sm:flex-row sm:items-center sm:px-6">
+      <div>
+        <p class="text-base font-extrabold tracking-tight">SuryaMeadow Dairy</p>
+        <p class="mt-1 text-xs text-emerald-100/80">Wardha Road Pasture Belt, Nagpur, Maharashtra • Morning Dispatch: 5:00 AM – 7:00 AM</p>
+      </div>
+      <div class="flex flex-wrap gap-5 text-xs font-semibold text-emerald-100">
+        <a href="#products" class="hover:text-butter">Products</a>
+        <a href="#subscription" class="hover:text-butter">Cost Estimator</a>
+        <a href="#quality" class="hover:text-butter">Cold Chain</a>
+        <a href="#delivery" class="hover:text-butter">Nagpur Zones</a>
+        <a href="#inquiry" class="hover:text-butter">Wholesale</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Slide-Over Bag Drawer -->
+  <div id="bagDrawer" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="bagDrawerTitle">
+    <div id="bagBackdrop" class="absolute inset-0 bg-ink/45 backdrop-blur-[1px]"></div>
+    <aside class="absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-white shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-200 px-6 py-4">
+        <div>
+          <h2 id="bagDrawerTitle" class="text-lg font-extrabold text-ink">Your Dairy Bag</h2>
+          <p class="text-xs text-slate-500">Morning route delivery • Nagpur</p>
+        </div>
+        <button
+          id="closeBagBtn"
+          type="button"
+          aria-label="Close bag drawer"
+          class="rounded-lg border border-slate-300 px-2.5 py-1 text-sm font-bold text-slate-700 hover:bg-slate-100"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div id="bagItems" class="flex-1 space-y-3 overflow-y-auto px-6 py-4"></div>
+
+      <div class="border-t border-slate-200 bg-cream/60 px-6 py-5">
+        <div class="flex items-center justify-between text-sm text-slate-600">
+          <span>Chilled Crate Delivery</span>
+          <span class="font-bold text-meadow">Included</span>
+        </div>
+        <div class="mt-2 flex items-center justify-between text-lg font-extrabold">
+          <span class="text-ink">Subtotal</span>
+          <span id="bagTotal" class="text-meadow">₹0</span>
+        </div>
+        <button
+          id="checkoutBtn"
+          type="button"
+          class="mt-4 w-full rounded-xl bg-meadow py-3 text-sm font-bold text-white shadow-sm transition hover:bg-meadowLight"
+        >
+          Confirm Sample Order Request
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    (function () {
+      const PRODUCTS = [
+        {
+          id: 'milk-whole',
+          name: 'Farm Fresh Whole Cow Milk',
+          category: 'Milk',
+          unit: '1 Litre',
+          price: 72,
+          note: '4.2%+ natural cream, chilled to 4°C before dawn.'
+        },
+        {
+          id: 'milk-buffalo',
+          name: 'Rich A2-Style Buffalo Milk',
+          category: 'Milk',
+          unit: '1 Litre',
+          price: 84,
+          note: 'Thick malai-rich milk ideal for curd, kheer, and chai.'
+        },
+        {
+          id: 'curd-400',
+          name: 'Slow-Set Matka Dahi (Curd)',
+          category: 'Cultured & Paneer',
+          unit: '400 g',
+          price: 42,
+          note: 'Cultured overnight with live strains for mild tang.'
+        },
+        {
+          id: 'paneer-200',
+          name: 'Fresh Malai Paneer',
+          category: 'Cultured & Paneer',
+          unit: '200 g',
+          price: 88,
+          note: 'Soft, non-rubbery texture pressed in small batches.'
+        },
+        {
+          id: 'ghee-500',
+          name: 'Traditional Bilona Cow Ghee',
+          category: 'Ghee & Sweets',
+          unit: '500 ml',
+          price: 690,
+          note: 'Hand-churned from cultured curd, rich danedar aroma.'
+        },
+        {
+          id: 'shrikhand-250',
+          name: 'Kesar Elaichi Shrikhand',
+          category: 'Ghee & Sweets',
+          unit: '250 g',
+          price: 115,
+          note: 'Strained chakka blended with saffron and green cardamom.'
+        }
+      ];
+
+      const FAQS = [
+        {
+          q: 'What time do SuryaMeadow deliveries arrive in Nagpur?',
+          a: 'Our insulated vans and route riders complete morning deliveries between 5:30 AM and 7:00 AM daily.'
+        },
+        {
+          q: 'Can I pause or change my subscription when traveling?',
+          a: 'Yes. You can pause deliveries or adjust milk/curd quantities anytime before 9:00 PM for the following morning.'
+        },
+        {
+          q: 'Is the milk homogenized or treated with preservatives?',
+          a: 'Never. We rely solely on hygienic milking and rapid 4°C chilling so the cream rises naturally when boiled.'
+        },
+        {
+          q: 'Do you offer bulk pricing for Nagpur cafes, bakeries, or events?',
+          a: 'Yes—select "Cafe / Restaurant Wholesale" or "Bulk Ghee, Paneer & Events" in the inquiry form above for wholesale slabs.'
+        }
+      ];
+
+      const COVERED_ZONES = [
+        '440015', '440022', '440025', '440027', '440034', '440010', '440020',
+        'manish nagar', 'somalwada', 'manewada', 'pratap nagar', 'dharampeth', 'ramdaspeth', 'besa', 'beltarodi'
+      ];
+
+      // State
+      let activeCategory = 'All';
+      let curdPacks = 0;
+      let cadenceDays = 30;
+      const productQty = Object.fromEntries(PRODUCTS.map(p => [p.id, 1]));
+      let bag = [];
+
+      // Elements
+      const toastEl = document.getElementById('toast');
+      const toastTextEl = document.getElementById('toastText');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const bagDrawer = document.getElementById('bagDrawer');
+      const openBagBtn = document.getElementById('openBagBtn');
+      const bagItemsEl = document.getElementById('bagItems');
+      const bagCountEl = document.getElementById('bagCount');
+      const bagTotalEl = document.getElementById('bagTotal');
+
+      // Helpers
+      function formatINR(num) {
+        return '₹' + Number(num).toLocaleString('en-IN');
+      }
+
+      function showToast(message) {
+        toastTextEl.textContent = message;
+        toastEl.classList.remove('hidden');
+        toastEl.classList.add('flex');
+        clearTimeout(window.__toastTimer);
+        window.__toastTimer = setTimeout(() => {
+          toastEl.classList.add('hidden');
+          toastEl.classList.remove('flex');
+        }, 2800);
+      }
+
+      function categoryIcon(category) {
+        if (category === 'Milk') {
+          return '<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3h8l1 4v13a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V7l1-4z"/><path d="M7 11h10"/></svg>';
+        }
+        if (category === 'Cultured & Paneer') {
+          return '<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11h16v3a6 6 0 0 1-6 6h-4a6 6 0 0 1-6-6v-3z"/><path d="M7 11c0-2.5 2-4.5 5-4.5s5 2 5 4.5"/></svg>';
+        }
+        return '<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8h12v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8z"/><path d="M9 4h6v4H9z"/></svg>';
+      }
+
+      // Navbar & Delivery scroll triggers
+      function jumpToDelivery() {
+        const deliverySection = document.getElementById('delivery');
+        const zoneInput = document.getElementById('zoneInput');
+        deliverySection.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => zoneInput.focus({ preventScroll: true }), 450);
+      }
+
+      document.getElementById('navCheckDeliveryBtn').addEventListener('click', jumpToDelivery);
+      document.getElementById('mobileCheckDeliveryBtn').addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        jumpToDelivery();
+      });
+
+      mobileMenuBtn.addEventListener('click', () => {
+        const isHidden = mobileMenu.classList.toggle('hidden');
+        mobileMenuBtn.setAttribute('aria-expanded', String(!isHidden));
+      });
+
+      document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+          mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      // Morning Cost Estimator
+      const milkInput = document.getElementById('milkLiters');
+      const milkLabel = document.getElementById('milkLitersLabel');
+      const curdCountLabel = document.getElementById('curdCountLabel');
+      const perDeliveryTotalEl = document.getElementById('perDeliveryTotal');
+      const estTotalEl = document.getElementById('estTotal');
+
+      function updateEstimator() {
+        const liters = parseFloat(milkInput.value);
+        const perDelivery = Math.round(liters * 72 + curdPacks * 42);
+        const cycleTotal = perDelivery * cadenceDays;
+
+        milkLabel.textContent = liters.toFixed(1) + ' L';
+        curdCountLabel.textContent = String(curdPacks);
+        perDeliveryTotalEl.textContent = formatINR(perDelivery);
+        estTotalEl.textContent = formatINR(cycleTotal);
+
+        return { liters, curdPacks, cadenceDays, cycleTotal };
+      }
+
+      milkInput.addEventListener('input', updateEstimator);
+
+      document.getElementById('curdDecBtn').addEventListener('click', () => {
+        if (curdPacks > 0) {
+          curdPacks -= 1;
+          updateEstimator();
+        }
+      });
+
+      document.getElementById('curdIncBtn').addEventListener('click', () => {
+        if (curdPacks < 5) {
+          curdPacks += 1;
+          updateEstimator();
+        }
+      });
+
+      document.querySelectorAll('.freq-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          cadenceDays = parseInt(btn.dataset.days, 10);
+          document.querySelectorAll('.freq-btn').forEach(b => {
+            const active = parseInt(b.dataset.days, 10) === cadenceDays;
+            b.setAttribute('aria-pressed', String(active));
+            b.className = active
+              ? 'freq-btn rounded-xl border-2 border-meadow bg-meadowSoft px-3 py-2.5 text-left transition'
+              : 'freq-btn rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-left transition hover:bg-slate-50';
+            b.querySelector('span:first-child').className = active
+              ? 'block text-sm font-bold text-meadow'
+              : 'block text-sm font-bold text-ink';
+          });
+          updateEstimator();
+        });
+      });
+
+      document.getElementById('addEstToBagBtn').addEventListener('click', () => {
+        const est = updateEstimator();
+        const cadenceName = est.cadenceDays === 30 ? 'Daily' : 'Alternate-Day';
+        const curdPart = est.curdPacks > 0 ? ` + ${est.curdPacks}x Curd` : '';
+        addToBag({
+          id: `sub-${est.liters}-${est.curdPacks}-${est.cadenceDays}`,
+          name: `${cadenceName} Plan (${est.liters.toFixed(1)}L Milk${curdPart})`,
+          unit: `${est.cadenceDays} deliveries / 30d`,
+          price: est.cycleTotal
+        }, 1);
+        openBagDrawer();
+      });
+
+      updateEstimator();
+
+      // Product Catalog
+      const productGrid = document.getElementById('productGrid');
+
+      function renderProducts() {
+        const list = activeCategory === 'All'
+          ? PRODUCTS
+          : PRODUCTS.filter(p => p.category === activeCategory);
+
+        productGrid.innerHTML = list.map(p => `
+          <article class="flex flex-col justify-between rounded-2xl border border-slate-200 bg-cream/55 p-5 transition hover:border-meadow/35 hover:shadow-sm">
+            <div>
+              <div class="flex items-center justify-between gap-2">
+                <span class="inline-flex items-center gap-1.5 rounded-full bg-meadowSoft px-2.5 py-1 text-[11px] font-bold text-meadow">
+                  ${categoryIcon(p.category)}
+                  <span>${p.category}</span>
+                </span>
+                <span class="text-xs font-semibold text-slate-500">${p.unit}</span>
+              </div>
+              <h3 class="mt-3.5 text-lg font-extrabold text-ink">${p.name}</h3>
+              <p class="mt-1 text-sm leading-relaxed text-slate-600">${p.note}</p>
+            </div>
+
+            <div class="mt-5 space-y-3 border-t border-slate-200/80 pt-4">
+              <div class="flex items-center justify-between">
+                <span class="text-xl font-extrabold text-ink">${formatINR(p.price)}</span>
+                <div class="flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white p-1">
+                  <button
+                    type="button"
+                    data-action="prod-dec"
+                    data-id="${p.id}"
+                    aria-label="Decrease quantity of ${p.name}"
+                    class="flex h-7 w-7 items-center justify-center rounded-lg text-sm font-bold text-ink hover:bg-slate-100"
+                  >−</button>
+                  <span id="prod-qty-${p.id}" class="w-6 text-center text-sm font-bold text-ink">${productQty[p.id]}</span>
+                  <button
+                    type="button"
+                    data-action="prod-inc"
+                    data-id="${p.id}"
+                    aria-label="Increase quantity of ${p.name}"
+                    class="flex h-7 w-7 items-center justify-center rounded-lg text-sm font-bold text-ink hover:bg-slate-100"
+                  >+</button>
+                </div>
+              </div>
+              <button
+                type="button"
+                data-action="prod-add"
+                data-id="${p.id}"
+                class="w-full rounded-xl bg-meadow py-2.5 text-xs font-bold text-white transition hover:bg-meadowLight"
+              >
+                Add to Bag
+              </button>
+            </div>
+          </article>
+        `).join('');
+      }
+
+      productGrid.addEventListener('click', e => {
+        const btn = e.target.closest('button[data-action]');
+        if (!btn) return;
+        const { action, id } = btn.dataset;
+        const product = PRODUCTS.find(p => p.id === id);
+        if (!product) return;
+
+        if (action === 'prod-dec' && productQty[id] > 1) {
+          productQty[id] -= 1;
+          document.getElementById(`prod-qty-${id}`).textContent = productQty[id];
+        } else if (action === 'prod-inc' && productQty[id] < 10) {
+          productQty[id] += 1;
+          document.getElementById(`prod-qty-${id}`).textContent = productQty[id];
+        } else if (action === 'prod-add') {
+          addToBag(product, productQty[id]);
+          productQty[id] = 1;
+          document.getElementById(`prod-qty-${id}`).textContent = '1';
+        }
+      });
+
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeCategory = btn.dataset.cat;
+          document.querySelectorAll('.cat-btn').forEach(b => {
+            const selected = b.dataset.cat === activeCategory;
+            b.className = selected
+              ? 'cat-btn rounded-xl bg-meadow px-4 py-2 text-xs font-bold text-white shadow-sm'
+              : 'cat-btn rounded-xl bg-cream px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-200';
+          });
+          renderProducts();
+        });
+      });
+
+      renderProducts();
+
+      // Bag Drawer State & Rendering
+      function openBagDrawer() {
+        bagDrawer.classList.remove('hidden');
+        openBagBtn.setAttribute('aria-expanded', 'true');
+      }
+
+      function closeBagDrawer() {
+        bagDrawer.classList.add('hidden');
+        openBagBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      function addToBag(item, quantity) {
+        const existing = bag.find(i => i.id === item.id);
+        if (existing) {
+          existing.qty += quantity;
+        } else {
+          bag.push({ id: item.id, name: item.name, unit: item.unit, price: item.price, qty: quantity });
+        }
+        renderBag();
+        showToast(`Added ${quantity} × ${item.name}`);
+      }
+
+      function renderBag() {
+        const totalItems = bag.reduce((sum, item) => sum + item.qty, 0);
+        const subtotal = bag.reduce((sum, item) => sum + item.price * item.qty, 0);
+        bagCountEl.textContent = String(totalItems);
+        bagTotalEl.textContent = formatINR(subtotal);
+
+        if (bag.length === 0) {
+          bagItemsEl.innerHTML = `
+            <div class="flex flex-col items-center justify-center py-14 text-center">
+              <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-cream text-meadow">
+                <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <path d="M16 10a4 4 0 0 1-8 0" />
+                </svg>
+              </span>
+              <p class="mt-3 text-sm font-bold text-ink">Your dairy bag is empty</p>
+              <p class="mt-1 text-xs text-slate-500">Add farm milk, curd, or a custom morning plan to get started.</p>
+            </div>
+          `;
+          return;
+        }
+
+        bagItemsEl.innerHTML = bag.map(item => `
+          <div class="rounded-xl border border-slate-200 bg-white p-3.5 shadow-sm">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <p class="text-sm font-bold text-ink">${item.name}</p>
+                <p class="text-xs text-slate-500">${item.unit} • ${formatINR(item.price)} each</p>
+              </div>
+              <button
+                type="button"
+                data-bag-action="remove"
+                data-id="${item.id}"
+                class="text-xs font-semibold text-red-600 hover:underline"
+              >
+                Remove
+              </button>
+            </div>
+            <div class="mt-3 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <button
+                  type="button"
+                  data-bag-action="dec"
+                  data-id="${item.id}"
+                  aria-label="Decrease quantity"
+                  class="flex h-7 w-7 items-center justify-center rounded-lg border border-slate-300 text-sm font-bold hover:bg-slate-100"
+                >−</button>
+                <span class="w-6 text-center text-sm font-bold">${item.qty}</span>
+                <button
+                  type="button"
+                  data-bag-action="inc"
+                  data-id="${item.id}"
+                  aria-label="Increase quantity"
+                  class="flex h-7 w-7 items-center justify-center rounded-lg border border-slate-300 text-sm font-bold hover:bg-slate-100"
+                >+</button>
+              </div>
+              <span class="text-sm font-extrabold text-meadow">${formatINR(item.price * item.qty)}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      bagItemsEl.addEventListener('click', e => {
+        const btn = e.target.closest('button[data-bag-action]');
+        if (!btn) return;
+        const { bagAction, id } = btn.dataset;
+        const idx = bag.findIndex(i => i.id === id);
+        if (idx === -1) return;
+
+        if (bagAction === 'inc') {
+          bag[idx].qty += 1;
+        } else if (bagAction === 'dec') {
+          bag[idx].qty -= 1;
+          if (bag[idx].qty <= 0) bag.splice(idx, 1);
+        } else if (bagAction === 'remove') {
+          bag.splice(idx, 1);
+        }
+        renderBag();
+      });
+
+      openBagBtn.addEventListener('click', openBagDrawer);
+      document.getElementById('closeBagBtn').addEventListener('click', closeBagDrawer);
+      document.getElementById('bagBackdrop').addEventListener('click', closeBagDrawer);
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && !bagDrawer.classList.contains('hidden')) closeBagDrawer();
+      });
+
+      document.getElementById('checkoutBtn').addEventListener('click', () => {
+        if (bag.length === 0) {
+          showToast('Add a dairy item or subscription plan first.');
+          return;
+        }
+        const total = bag.reduce((s, i) => s + i.price * i.qty, 0);
+        bag = [];
+        renderBag();
+        closeBagDrawer();
+        showToast(`Sample order request (${formatINR(total)}) confirmed!`);
+      });
+
+      renderBag();
+
+      // Delivery Zone Checker
+      const zoneInput = document.getElementById('zoneInput');
+      const zoneResult = document.getElementById('zoneResult');
+
+      function checkZone(rawValue) {
+        const query = rawValue.trim().toLowerCase();
+        zoneResult.classList.remove('hidden');
+
+        if (query.length < 3) {
+          zoneResult.className = 'mt-3 rounded-xl bg-amber-50 p-3.5 text-sm font-medium text-amber-900 ring-1 ring-amber-200';
+          zoneResult.textContent = 'Please enter a valid 6-digit Nagpur PIN code or locality name.';
+          return;
+        }
+
+        const isCovered = COVERED_ZONES.some(z => query.includes(z) || z.includes(query));
+        if (isCovered) {
+          zoneResult.className = 'mt-3 rounded-xl bg-meadowSoft p-3.5 text-sm font-semibold text-meadow ring-1 ring-emerald-200';
+          zoneResult.textContent = `✓ Great news! Morning route coverage (5:30 AM – 7:00 AM) is active for "${rawValue.trim()}".`;
+        } else {
+          zoneResult.className = 'mt-3 rounded-xl bg-amber-50 p-3.5 text-sm font-medium text-amber-900 ring-1 ring-amber-200';
+          zoneResult.textContent = `"${rawValue.trim()}" is not on an active morning loop yet. Submit your locality in the form below to request route addition.`;
+        }
+      }
+
+      document.getElementById('zoneForm').addEventListener('submit', e => {
+        e.preventDefault();
+        checkZone(zoneInput.value);
+      });
+
+      document.querySelectorAll('.sample-zone').forEach(chip => {
+        chip.addEventListener('click', () => {
+          zoneInput.value = chip.dataset.zone;
+          checkZone(chip.dataset.zone);
+        });
+      });
+
+      // FAQ Accordion
+      const faqList = document.getElementById('faqList');
+      faqList.innerHTML = FAQS.map((item, idx) => `
+        <div class="rounded-xl border border-slate-200 bg-cream/60">
+          <button
+            type="button"
+            data-faq-idx="${idx}"
+            aria-expanded="false"
+            aria-controls="faq-panel-${idx}"
+            class="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left text-sm font-bold text-ink"
+          >
+            <span>${item.q}</span>
+            <span class="faq-icon shrink-0 text-base font-extrabold text-meadow">+</span>
+          </button>
+          <div id="faq-panel-${idx}" class="hidden border-t border-slate-200/70 px-4 py-3 text-sm leading-relaxed text-slate-600">
+            ${item.a}
+          </div>
+        </div>
+      `).join('');
+
+      faqList.addEventListener('click', e => {
+        const btn = e.target.closest('button[data-faq-idx]');
+        if (!btn) return;
+        const idx = btn.dataset.faqIdx;
+        const panel = document.getElementById(`faq-panel-${idx}`);
+        const icon = btn.querySelector('.faq-icon');
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+
+        btn.setAttribute('aria-expanded', String(!expanded));
+        panel.classList.toggle('hidden', expanded);
+        icon.textContent = expanded ? '+' : '−';
+      });
+
+      // Inquiry Form Validation
+      function setFieldError(errorId, message) {
+        const el = document.getElementById(errorId);
+        if (message) {
+          el.textContent = message;
+          el.classList.remove('hidden');
+        } else {
+          el.textContent = '';
+          el.classList.add('hidden');
+        }
+      }
+
+      document.getElementById('inquiryForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const name = document.getElementById('inqName').value.trim();
+        const contact = document.getElementById('inqContact').value.trim();
+        const locality = document.getElementById('inqLocality').value.trim();
+        const message = document.getElementById('inqMessage').value.trim();
+
+        let valid = true;
+
+        if (name.length < 2) {
+          setFieldError('errName', 'Please enter your full name.');
+          valid = false;
+        } else {
+          setFieldError('errName', '');
+        }
+
+        const phoneRegex = /^(\+91[\-\s]?)?[6-9]\d{9}$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!phoneRegex.test(contact) && !emailRegex.test(contact)) {
+          setFieldError('errContact', 'Enter a valid 10-digit Indian mobile number or email.');
+          valid = false;
+        } else {
+          setFieldError('errContact', '');
+        }
+
+        if (locality.length < 3) {
+          setFieldError('errLocality', 'Please specify your Nagpur locality or PIN code.');
+          valid = false;
+        } else {
+          setFieldError('errLocality', '');
+        }
+
+        if (message.length < 8) {
+          setFieldError('errMessage', 'Please share brief details (at least 8 characters).');
+          valid = false;
+        } else {
+          setFieldError('errMessage', '');
+        }
+
+        if (!valid) return;
+
+        e.target.reset();
+        showToast('Inquiry received! Our Nagpur farm desk will reach out shortly.');
+      });
+    })();
+  </script>
+</body>
+</html>
